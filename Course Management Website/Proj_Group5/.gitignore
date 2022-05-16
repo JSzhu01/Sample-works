@@ -1,0 +1,32 @@
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+config.php
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+.DS_Store
+modules/.DS_Store
+public/.DS_Store
+config.php
+
+public/uploads/6263724ada02aScreen Shot 2022-04-21 at 11.26.16 AM.png
+public/uploads/62638e591914eScreen Shot 2022-04-22 at 11.44.47 PM.png
+public/uploads/62608983e77a8Readme.pdf
+public/uploads/626094906aa98Before luca quit.png
+public/uploads/626093fad572dtest 1.png
+public/uploads/6264426e43c53Screen Shot 2022-04-23 at 5.11.02 AM.png
+
+

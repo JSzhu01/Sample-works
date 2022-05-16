@@ -1,0 +1,141 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using Sirenix.OdinInspector;
+
+//Purpose is to control navigation between sections of genome selection
+//Also set tabs status, next button and set buttons in each section
+//Data is then communicated to GenomeSystem to set parameters
+//Data is loaded from GenomeFileSystem script
+
+public class GenomeMenu_System_GV : MonoBehaviour
+{
+    //public GameObject
+
+    [Header("Genome Selection Reference")]
+    public GameObject GenomeSelectionContainer;
+
+    [Header("Genome Selection Dictionary")]
+    [ShowInInspector]
+    public Dictionary<string, GameObject> GenomeSelection_Btns = new Dictionary<string, GameObject>();
+
+    [ShowInInspector]
+    public Dictionary<string, string> GenomeSelection = new Dictionary<string, string>();
+
+    [Header("Current Selection")]
+    [ShowInInspector]
+    public Dictionary<string, GameObject> GenomeSection = new Dictionary<string, GameObject>();
+
+    [ShowInInspector]
+    public List<string> GenomeSectionOrder;// = new string[] { };
+
+    [Header("Current Selected Section")]
+    public GameObject CurrentSection;
+
+    [Header("Tab Buttons")]
+    public GenomeMenu_Tabs_GV GenomeMenu_Tabs;
+
+    //--------------------------------------------------//
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        SetupGenomeSelectionDictionary();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    // Tab Sections
+    //----------------------------------------------------------------------------------------------------
+
+    void SetupGenomeSelectionDictionary()
+    {
+        foreach (Transform item in GenomeSelectionContainer.transform)
+        {
+            print(item.name);
+            GenomeSelection_Btns.Add(item.name, null);
+            GenomeSelection.Add(item.name, "");
+            GenomeSection.Add(item.name, item.gameObject);
+            GenomeSectionOrder.Add(item.name);//[item.transform.GetSiblingIndex()] = 
+        }
+    }
+
+    public void SetGenomeSelection(string key, string value, GameObject btn)
+    {
+        GenomeSelection_Btns[key] = btn;
+        GenomeSelection[key] = value;
+
+        GenomeSection[key].GetComponent<GenomeMenu_Section_GV>().EnableNextBtn();// NextPhase_btn.GetComponent<Button>().interactable = true;
+
+        //LoadNextSection();
+    }
+
+    //----------------------------------------------------------------------------------------------------
+
+    public void LoadPreviousSection()
+    {
+        int sectionIndex = CurrentSection.transform.GetSiblingIndex();
+        print("GetSiblingIndex " + sectionIndex);
+        string currentSectionKey = CurrentSection.GetComponent<GenomeMenu_Section_GV>().name;
+
+        string nextSectionKey = GenomeSectionOrder[sectionIndex - 1];
+        print("nextSectionKey " + nextSectionKey);
+
+
+        DisableAllSections();
+
+        EnableSection(nextSectionKey);
+    }
+
+    public void LoadNextSection()
+    {
+        int sectionIndex = CurrentSection.transform.GetSiblingIndex();
+        print("GetSiblingIndex " + sectionIndex);
+        string currentSectionKey = CurrentSection.GetComponent<GenomeMenu_Section_GV>().name;
+
+        string nextSectionKey = GenomeSectionOrder[sectionIndex + 1];
+        print("nextSectionKey " + nextSectionKey);
+
+
+
+        EnableSection(nextSectionKey);
+
+        //for (int i=0; i< nextSectionKey.Length; i++)
+        //{
+
+        //}
+
+        //(sectionIndex + 1)
+
+        //for () {
+
+        //    GenomeSection[]
+        //}
+    }
+
+    void DisableAllSections()
+    {
+        foreach (var section in GenomeSection)
+        {
+            //foo(item.Key);
+            section.Value.SetActive(false);
+        }
+    }
+
+    public void EnableSection(string section)
+    {
+        DisableAllSections();
+
+        GenomeSection[section].SetActive(true);
+
+        GenomeMenu_Tabs.EnableSection(section);
+
+        CurrentSection = GenomeSection[section];
+    }
+}
