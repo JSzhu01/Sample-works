@@ -4,6 +4,8 @@ A simple script to parse a specific propositonal logic expression and generate p
 
 Can take txt file or user input.
 
+Check readme.pdf for instructions.
+
 For COMP 5361 course assignment.
 
 
